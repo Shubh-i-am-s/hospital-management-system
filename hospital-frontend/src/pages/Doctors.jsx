@@ -13,12 +13,16 @@ export default function Doctors() {
   });
 
   const fetchDoctors = async () => {
-    const res = await axios.get("http://localhost:8000/doctors");
+    const res = await axios.get(
+      "https://hospital-management-system-1u7z.onrender.com/doctors",
+    );
     setDoctors(res.data);
   };
 
   const fetchDepartments = async () => {
-    const res = await axios.get("http://localhost:8000/departments");
+    const res = await axios.get(
+      "https://hospital-management-system-1u7z.onrender.com/departments",
+    );
     setDepartments(res.data);
   };
 
@@ -34,7 +38,10 @@ export default function Doctors() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios.post("http://localhost:8000/doctors", formData);
+    await axios.post(
+      "https://hospital-management-system-1u7z.onrender.com/doctors",
+      formData,
+    );
 
     fetchDoctors();
 

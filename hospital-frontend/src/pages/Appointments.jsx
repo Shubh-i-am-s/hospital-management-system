@@ -14,17 +14,23 @@ export default function Appointments() {
   });
 
   const fetchAppointments = async () => {
-    const res = await axios.get("http://localhost:8000/appointments");
+    const res = await axios.get(
+      "https://hospital-management-system-1u7z.onrender.com/appointments",
+    );
     setAppointments(res.data);
   };
 
   const fetchPatients = async () => {
-    const res = await axios.get("http://localhost:8000/patients");
+    const res = await axios.get(
+      "https://hospital-management-system-1u7z.onrender.com/patients",
+    );
     setPatients(res.data);
   };
 
   const fetchDoctors = async () => {
-    const res = await axios.get("http://localhost:8000/doctors");
+    const res = await axios.get(
+      "https://hospital-management-system-1u7z.onrender.com/doctors",
+    );
     setDoctors(res.data);
   };
 
@@ -41,7 +47,10 @@ export default function Appointments() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios.post("http://localhost:8000/appointments", formData);
+    await axios.post(
+      "https://hospital-management-system-1u7z.onrender.com/appointments",
+      formData,
+    );
 
     fetchAppointments();
 

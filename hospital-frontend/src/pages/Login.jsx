@@ -19,7 +19,7 @@ export default function Login({ setIsLoggedIn }) {
 
     try {
       const res = await axios.post(
-        "http://localhost:8000/auth/login",
+        "https://hospital-management-system-1u7z.onrender.com/auth/login",
         formData,
       );
 

@@ -15,7 +15,9 @@ export default function Patients() {
   // Fetch patients from backend
   const fetchPatients = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/patients");
+      const res = await axios.get(
+        "https://hospital-management-system-1u7z.onrender.com/patients",
+      );
       setPatients(res.data);
     } catch (err) {
       console.error(err);
@@ -36,7 +38,10 @@ export default function Patients() {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:8000/patients", formData);
+      await axios.post(
+        "https://hospital-management-system-1u7z.onrender.com/patients",
+        formData,
+      );
 
       fetchPatients(); // Refresh table after insert
 
