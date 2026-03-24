@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_BASE_URL from "../config";
 
 export default function Login({ setIsLoggedIn }) {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ export default function Login({ setIsLoggedIn }) {
 
     try {
       const res = await axios.post(
-        "https://hospital-management-system-1u7z.onrender.com/auth/login",
+        `${API_BASE_URL}/auth/login`,
         formData,
       );
 

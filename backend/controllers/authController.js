@@ -2,12 +2,14 @@ const db = require("../db");
 
 exports.login = async (req, res) => {
   const { r_id, r_pass } = req.body;
+  console.log("Login attempt:", { r_id, r_pass });
 
   try {
     const [rows] = await db.query(
       "SELECT * FROM receptionist WHERE r_id = ? AND r_pass = ?",
       [r_id, r_pass],
     );
+    console.log("Found rows:", rows.length);
 
     if (rows.length > 0) {
       res.json({ success: true, message: "Login successful ✅" });

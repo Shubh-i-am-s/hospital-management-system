@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config";
 
 export default function Appointments() {
   const [appointments, setAppointments] = useState([]);
@@ -15,21 +16,21 @@ export default function Appointments() {
 
   const fetchAppointments = async () => {
     const res = await axios.get(
-      "https://hospital-management-system-1u7z.onrender.com/appointments",
+      `${API_BASE_URL}/appointments`,
     );
     setAppointments(res.data);
   };
 
   const fetchPatients = async () => {
     const res = await axios.get(
-      "https://hospital-management-system-1u7z.onrender.com/patients",
+      `${API_BASE_URL}/patients`,
     );
     setPatients(res.data);
   };
 
   const fetchDoctors = async () => {
     const res = await axios.get(
-      "https://hospital-management-system-1u7z.onrender.com/doctors",
+      `${API_BASE_URL}/doctors`,
     );
     setDoctors(res.data);
   };
@@ -48,7 +49,7 @@ export default function Appointments() {
     e.preventDefault();
 
     await axios.post(
-      "https://hospital-management-system-1u7z.onrender.com/appointments",
+      `${API_BASE_URL}/appointments`,
       formData,
     );
 

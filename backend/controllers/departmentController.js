@@ -8,3 +8,16 @@ exports.getDepartments = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.createDepartment = async (req, res) => {
+  const { dept_name } = req.body;
+  try {
+    const [result] = await db.query(
+      "INSERT INTO departments (dept_name) VALUES (?)",
+      [dept_name]
+    );
+    res.json({ department_id: result.insertId, dept_name });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

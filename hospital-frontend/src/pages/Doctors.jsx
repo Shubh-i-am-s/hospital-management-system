@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config";
 
 export default function Doctors() {
   const [doctors, setDoctors] = useState([]);
@@ -14,14 +15,14 @@ export default function Doctors() {
 
   const fetchDoctors = async () => {
     const res = await axios.get(
-      "https://hospital-management-system-1u7z.onrender.com/doctors",
+      `${API_BASE_URL}/doctors`,
     );
     setDoctors(res.data);
   };
 
   const fetchDepartments = async () => {
     const res = await axios.get(
-      "https://hospital-management-system-1u7z.onrender.com/departments",
+      `${API_BASE_URL}/departments`,
     );
     setDepartments(res.data);
   };
@@ -39,7 +40,7 @@ export default function Doctors() {
     e.preventDefault();
 
     await axios.post(
-      "https://hospital-management-system-1u7z.onrender.com/doctors",
+      `${API_BASE_URL}/doctors`,
       formData,
     );
 

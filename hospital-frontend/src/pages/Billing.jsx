@@ -1,110 +1,112 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import API_BASE_URL from "../config";
 
 export default function Billing() {
   const [selectedBill, setSelectedBill] = useState(null);
+  const [bills, setBills] = useState([]);
 
-  const [bills] = useState([
-    {
-      appointmentId: 1,
-      billNumber: 1,
-      patient: "Rahul Sharma",
-      doctor: "Dr. Mehta",
-      amount: 2000,
-      status: "Paid",
-      date: "25 Feb 2026",
-    },
-    {
-      appointmentId: 2,
-      billNumber: 1,
-      patient: "Priya Singh",
-      doctor: "Dr. Sharma",
-      amount: 3500,
-      status: "Pending",
-      date: "26 Feb 2026",
-    },
-  ]);
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/billing`)
+      .then((res) => setBills(res.data))
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Billing</h2>
 
-      <table className="w-full bg-white shadow rounded-xl">
-        <thead className="bg-slate-100">
+      <table className="w-full bg-white shadow rounded-xl text-left border-collapse overflow-hidden">
+        <thead className="bg-slate-50 border-b">
           <tr>
-            <th className="p-3 text-left">Appointment ID</th>
-            <th className="p-3 text-left">Bill No</th>
-            <th className="p-3 text-left">Amount</th>
-            <th className="p-3 text-left">Status</th>
-            <th className="p-3 text-left">See Bill</th>
+            <th className="p-4 font-semibold text-slate-700">Appointment ID</th>
+            <th className="p-4 font-semibold text-slate-700">Bill No</th>
+            <th className="p-4 font-semibold text-slate-700">Patient</th>
+            <th className="p-4 font-semibold text-slate-700">Amount</th>
+            <th className="p-4 font-semibold text-slate-700">Date</th>
+            <th className="p-4 font-semibold text-slate-700">Actions</th>
           </tr>
         </thead>
-        <tbody>
-          {bills.map((b, index) => (
-            <tr key={index} className="border-t">
-              <td className="p-3">{b.appointmentId}</td>
-              <td className="p-3">{b.billNumber}</td>
-              <td className="p-3">₹{b.amount}</td>
-              <td className="p-3">{b.status}</td>
-              <td className="p-3">
-                <button
-                  onClick={() => setSelectedBill(b)}
-                  className="bg-slate-900 px-4 py-1 rounded-md text-white hover:bg-slate-700"
-                >
-                  View
-                </button>
+        <tbody className="divide-y text-slate-600">
+          {bills.length > 0 ? (
+            bills.map((b, index) => (
+              <tr key={index} className="hover:bg-slate-50 transition">
+                <td className="p-4">{b.appointment_id}</td>
+                <td className="p-4">{b.bill_number}</td>
+                <td className="p-4">{b.p_name}</td>
+                <td className="p-4">₹{b.amount}</td>
+                <td className="p-4">{new Date(b.appointment_date).toLocaleDateString()}</td>
+                <td className="p-4 text-center">
+                  <button
+                    onClick={() => setSelectedBill(b)}
+                    className="bg-slate-900 px-4 py-2 rounded-lg text-white hover:bg-slate-700 transition"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6" className="p-4 text-center text-gray-400">
+                No bills found.
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
       {/* BILL MODAL */}
       {selectedBill && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-          <div className="bg-white w-[500px] rounded-xl shadow-xl p-6 relative">
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white w-[500px] rounded-2xl shadow-2xl p-8 relative">
             <button
               onClick={() => setSelectedBill(null)}
-              className="absolute top-3 right-4 text-gray-500 text-xl"
+              className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl transition"
             >
               ×
             </button>
 
-            <h2 className="text-xl font-bold mb-4 border-b pb-2">
+            <h2 className="text-2xl font-bold mb-6 border-b pb-4 text-slate-800">
               Hospital Invoice
             </h2>
 
-            <div className="space-y-2 text-sm">
-              <p>
-                <strong>Patient:</strong> {selectedBill.patient}
-              </p>
-              <p>
-                <strong>Doctor:</strong> {selectedBill.doctor}
-              </p>
-              <p>
-                <strong>Appointment ID:</strong> {selectedBill.appointmentId}
-              </p>
-              <p>
-                <strong>Bill Number:</strong> {selectedBill.billNumber}
-              </p>
-              <p>
-                <strong>Date:</strong> {selectedBill.date}
-              </p>
-              <p>
-                <strong>Status:</strong> {selectedBill.status}
-              </p>
+            <div className="space-y-4 text-slate-600">
+              <div className="flex justify-between">
+                <strong>Patient:</strong>
+                <span>{selectedBill.p_name}</span>
+              </div>
+              <div className="flex justify-between">
+                <strong>Doctor:</strong>
+                <span>{selectedBill.doctor_name}</span>
+              </div>
+              <div className="flex justify-between">
+                <strong>Appointment ID:</strong>
+                <span>{selectedBill.appointment_id}</span>
+              </div>
+              <div className="flex justify-between">
+                <strong>Bill Number:</strong>
+                <span>{selectedBill.bill_number}</span>
+              </div>
+              <div className="flex justify-between">
+                <strong>Date:</strong>
+                <span>{new Date(selectedBill.appointment_date).toLocaleDateString()}</span>
+              </div>
 
-              <hr className="my-3" />
+              <hr className="my-6 border-slate-100" />
 
-              <p className="text-lg font-bold">
-                Total Amount: ₹{selectedBill.amount}
-              </p>
+              <div className="flex justify-between text-xl font-extrabold text-slate-900 bg-slate-50 p-4 rounded-xl">
+                <span>Total Amount:</span>
+                <span>₹{selectedBill.amount}</span>
+              </div>
             </div>
 
             <button
-              className="mt-6 w-full bg-slate-900 text-white py-2 rounded-lg hover:bg-slate-700"
-              onClick={() => alert("Printing Bill...")}
+              className="mt-8 w-full bg-slate-900 text-white py-4 rounded-xl font-bold hover:bg-slate-800 transition active:scale-[0.98]"
+              onClick={() => window.print()}
             >
-              Print Bill
+              Print Invoice
             </button>
           </div>
         </div>

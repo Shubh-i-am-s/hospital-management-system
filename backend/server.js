@@ -14,6 +14,7 @@ app.use("/departments", require("./routes/departmentRoutes"));
 app.use("/appointments", require("./routes/appointmentRoutes"));
 app.use("/billing", require("./routes/billingRoutes"));
 app.use("/auth", require("./routes/authRoutes"));
+app.use("/receptionists", require("./routes/receptionistRoutes"));
 
 app.get("/test", async (req, res) => {
   try {

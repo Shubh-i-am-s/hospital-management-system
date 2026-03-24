@@ -38,6 +38,10 @@ export default function Sidebar() {
         <Link to="/departments" className={linkClass("/departments")}>
           Departments
         </Link>
+
+        <Link to="/receptionist" className={linkClass("/receptionist")}>
+          Receptionist
+        </Link>
       </nav>
     </div>
   );

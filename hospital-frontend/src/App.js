@@ -11,27 +11,29 @@ import Appointments from "./pages/Appointments";
 import Billing from "./pages/Billing";
 import Departments from "./pages/Departments";
 import Login from "./pages/Login";
+import Receptionist from "./pages/Receptionist";
+
+// Defined outside App so React doesn't treat it as a new component on every render
+const Layout = ({ isLoggedIn, children }) => {
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return (
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1 bg-slate-100 min-h-screen">
+        <Navbar />
+        {children}
+      </div>
+    </div>
+  );
+};
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn") === "true",
   );
-
-  const Layout = ({ children }) => {
-    if (!isLoggedIn) {
-      return <Navigate to="/login" />;
-    }
-
-    return (
-      <div className="flex">
-        <Sidebar />
-        <div className="flex-1 bg-slate-100 min-h-screen">
-          <Navbar />
-          {children}
-        </div>
-      </div>
-    );
-  };
 
   return (
     <BrowserRouter>
@@ -44,7 +46,7 @@ function App() {
         <Route
           path="/"
           element={
-            <Layout>
+            <Layout isLoggedIn={isLoggedIn}>
               <Dashboard />
             </Layout>
           }
@@ -53,7 +55,7 @@ function App() {
         <Route
           path="/patients"
           element={
-            <Layout>
+            <Layout isLoggedIn={isLoggedIn}>
               <Patients />
             </Layout>
           }
@@ -62,7 +64,7 @@ function App() {
         <Route
           path="/doctors"
           element={
-            <Layout>
+            <Layout isLoggedIn={isLoggedIn}>
               <Doctors />
             </Layout>
           }
@@ -71,7 +73,7 @@ function App() {
         <Route
           path="/appointments"
           element={
-            <Layout>
+            <Layout isLoggedIn={isLoggedIn}>
               <Appointments />
             </Layout>
           }
@@ -80,7 +82,7 @@ function App() {
         <Route
           path="/billing"
           element={
-            <Layout>
+            <Layout isLoggedIn={isLoggedIn}>
               <Billing />
             </Layout>
           }
@@ -89,8 +91,17 @@ function App() {
         <Route
           path="/departments"
           element={
-            <Layout>
+            <Layout isLoggedIn={isLoggedIn}>
               <Departments />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/receptionist"
+          element={
+            <Layout isLoggedIn={isLoggedIn}>
+              <Receptionist />
             </Layout>
           }
         />
