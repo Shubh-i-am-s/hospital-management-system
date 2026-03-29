@@ -63,6 +63,25 @@ export default function Appointments() {
     });
   };
 
+  const handleGenerateBill = async (appointmentId) => {
+    const amount = prompt("Enter billing amount (₹):", "500");
+    if (!amount) return;
+
+    const billNumber = Math.floor(100000 + Math.random() * 900000); // 6-digit random number
+
+    try {
+      await axios.post(`${API_BASE_URL}/billing`, {
+        appointment_id: appointmentId,
+        bill_number: billNumber,
+        amount: parseFloat(amount),
+      });
+      alert(`Bill #${billNumber} generated successfully! ✅`);
+    } catch (err) {
+      console.error(err);
+      alert("Error generating bill: " + (err.response?.data?.error || err.message));
+    }
+  };
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6">Book Appointment</h2>
@@ -136,6 +155,7 @@ export default function Appointments() {
             <th className="p-3 text-left">Doctor</th>
             <th className="p-3 text-left">Date</th>
             <th className="p-3 text-left">Time</th>
+            <th className="p-3 text-center">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -145,6 +165,14 @@ export default function Appointments() {
               <td className="p-3">{a.doctor_name}</td>
               <td className="p-3">{a.appointment_date}</td>
               <td className="p-3">{a.appointment_time}</td>
+              <td className="p-3 text-center">
+                <button
+                  onClick={() => handleGenerateBill(a.appointment_id)}
+                  className="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700"
+                >
+                  Generate Bill
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

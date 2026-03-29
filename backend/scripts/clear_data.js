@@ -15,10 +15,10 @@ async function clearData() {
     }
 
     // Re-insert default receptionist
-    console.log("Re-inserting default receptionist (101 / admin123)...");
+    console.log("Re-inserting default receptionist (101 / Admin)...");
     await db.query(
-      "INSERT INTO receptionist (r_id, r_pass) VALUES (?, ?)",
-      [101, 'admin123']
+      "INSERT INTO receptionist (r_id, r_name) VALUES (?, ?)",
+      [101, 'Admin']
     );
 
     // Re-enable foreign key checks

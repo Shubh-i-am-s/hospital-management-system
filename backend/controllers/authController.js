@@ -1,13 +1,13 @@
 const db = require("../db");
 
 exports.login = async (req, res) => {
-  const { r_id, r_pass } = req.body;
-  console.log("Login attempt:", { r_id, r_pass });
+  const { r_id, r_name } = req.body;
+  console.log("Login attempt:", { r_id, r_name });
 
   try {
     const [rows] = await db.query(
-      "SELECT * FROM receptionist WHERE r_id = ? AND r_pass = ?",
-      [r_id, r_pass],
+      "SELECT * FROM receptionist WHERE r_id = ? AND r_name = ?",
+      [r_id, r_name],
     );
     console.log("Found rows:", rows.length);
 

@@ -22,7 +22,7 @@ export default function Receptionist() {
           <thead className="bg-slate-50 border-b">
             <tr>
               <th className="p-4 font-semibold text-slate-700">ID</th>
-              <th className="p-4 font-semibold text-slate-700">Password</th>
+              <th className="p-4 font-semibold text-slate-700">Name</th>
             </tr>
           </thead>
           <tbody className="divide-y">
@@ -30,7 +30,7 @@ export default function Receptionist() {
               receptionists.map((r) => (
                 <tr key={r.r_id} className="hover:bg-slate-50 transition">
                   <td className="p-4">{r.r_id}</td>
-                  <td className="p-4 text-slate-400 italic">{r.r_pass}</td>
+                  <td className="p-4 text-slate-400 italic">{r.r_name}</td>
                 </tr>
               ))
             ) : (

@@ -6,7 +6,7 @@ import API_BASE_URL from "../config";
 export default function Login({ setIsLoggedIn }) {
   const [formData, setFormData] = useState({
     r_id: "",
-    r_pass: "",
+    r_name: "",
   });
 
   const navigate = useNavigate();
@@ -55,10 +55,10 @@ export default function Login({ setIsLoggedIn }) {
         />
 
         <input
-          type="password"
-          placeholder="Password"
-          name="r_pass"
-          value={formData.r_pass}
+          type="text"
+          placeholder="Receptionist Name"
+          name="r_name"
+          value={formData.r_name}
           onChange={handleChange}
           className="w-full p-3 mb-4 border rounded-lg"
           required
