@@ -82,6 +82,16 @@ export default function Appointments() {
     }
   };
 
+  const handleDone = async (appointmentId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/appointments/${appointmentId}`);
+      fetchAppointments();
+    } catch (err) {
+      console.error(err);
+      alert("Error removing appointment: " + (err.response?.data?.error || err.message));
+    }
+  };
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6">Book Appointment</h2>
@@ -165,12 +175,18 @@ export default function Appointments() {
               <td className="p-3">{a.doctor_name}</td>
               <td className="p-3">{a.appointment_date}</td>
               <td className="p-3">{a.appointment_time}</td>
-              <td className="p-3 text-center">
+              <td className="p-3 text-center flex justify-center gap-2">
                 <button
                   onClick={() => handleGenerateBill(a.appointment_id)}
                   className="bg-green-600 text-white px-3 py-1 rounded-md text-sm hover:bg-green-700"
                 >
                   Generate Bill
+                </button>
+                <button
+                  onClick={() => handleDone(a.appointment_id)}
+                  className="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600"
+                >
+                  Done
                 </button>
               </td>
             </tr>
